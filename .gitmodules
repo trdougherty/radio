@@ -7,3 +7,12 @@
 [submodule "liquid-dsp"]
 	path = liquid-dsp
 	url = git://github.com/jgaeddert/liquid-dsp.git
+[submodule "SoapySDR"]
+	path = SoapySDR
+	url = https://github.com/pothosware/SoapySDR.git
+[submodule "SoapyUHD"]
+	path = SoapyUHD
+	url = https://github.com/pothosware/SoapyUHD.git
+[submodule "uhd"]
+	path = uhd
+	url = git://github.com/EttusResearch/uhd.git
