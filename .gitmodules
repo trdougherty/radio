@@ -1,0 +1,18 @@
+[submodule "simplespectral"]
+	path = simplespectral
+	url = git@github.com:xmikos/simplespectral.git
+[submodule "soapy_power"]
+	path = soapy_power
+	url = git@github.com:xmikos/soapy_power.git
+[submodule "liquid-dsp"]
+	path = liquid-dsp
+	url = git://github.com/jgaeddert/liquid-dsp.git
+[submodule "SoapySDR"]
+	path = SoapySDR
+	url = https://github.com/pothosware/SoapySDR.git
+[submodule "SoapyUHD"]
+	path = SoapyUHD
+	url = https://github.com/pothosware/SoapyUHD.git
+[submodule "uhd"]
+	path = uhd
+	url = git://github.com/EttusResearch/uhd.git
