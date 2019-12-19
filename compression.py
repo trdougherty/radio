@@ -1,18 +1,28 @@
 import pandas as pd
+import numpy as np
+import compress_json
 
-def compress(sweep):
+def convert_json(sweep):
     # This first segment is attempting to compress all of the objects into categorical variables
-    cat_columns = sweep.select_dtypes(['object']).columns
-    sweep[cat_columns] = sweep[cat_columns].apply(lambda x: x.astype('category'))
+    date = str(sweep['Date'][0]).strip()
+    time = str(sweep['Time'][0]).strip()
+    bins = str(sweep['hz_bin'][0])
+    samples = str(sweep['n_samples'][0])
+    sweep = sweep.drop(["Date","Time","n_samples","hz_bin"], axis=1)
+    temp = pd.DataFrame(columns=['hz','db'])
 
-    # Weird case of dealing with this
-    sweep = sweep.astype({"hz_bin":"int32"})
+    for i, row in sweep.iterrows():
+        high = row['hz_high']; low = row['hz_low'];
+        r = np.arange(low, high, (high-low)/5) # Five is from the sweep software we're provided
+        for c,i in enumerate(r):
+            temp = temp.append({"hz":i, "db":row.iloc[2+c]}, ignore_index=True)
 
-    # Manage all of the float values
-    float_cols = sweep.select_dtypes(['float64']).columns
-    sweep[float_cols] = sweep[float_cols].apply(lambda x: x.astype('float16'))
+    d = {
+        "date":date,
+        "time":time,
+        "bins":bins,
+        "samples":samples,
+        "data":temp.to_json(orient="records")
+    }
 
-    # Manage all of the int values
-    int_cols = sweep.select_dtypes(['int64']).columns
-    sweep[int_cols] = sweep[int_cols].apply(lambda x: x.astype('int32'))
-    return sweep
+    return d
