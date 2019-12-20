@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import compress_json
 
 def convert_json(sweep):
     # This first segment is attempting to compress all of the objects into categorical variables

@@ -2,7 +2,7 @@ import sys
 import os
 import json
 import pandas as pd
-import compress_json
+import gzip
 
 from gps_scan import gps_scan
 from compression import convert_json
@@ -28,5 +28,7 @@ if not os.path.exists(saving):
     os.makedirs(saving)
 
 # Compresses the files so we can save them and removes the uncompressed originals
-compress_json.dump(json_scan, saving+"/"+file_base+".json.gz")
+with gzip.GzipFile(saving+"/"+file_base+".json.gz", 'w') as outfile:
+        outfile.write(json.dumps(json_scan, outfile))
+
 os.remove(filename)
