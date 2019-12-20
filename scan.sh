@@ -8,5 +8,7 @@ hackrf_sweep -1 -r temp/$temp_filename
 
 
 echo $temp_filename
+# We probably want to inject the gps data in here somewhere
+
 # Process that text into some kind of meaningful data representation
 python process_rawscan.py temp/$temp_filename
