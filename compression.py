@@ -17,12 +17,10 @@ def convert_json(sweep):
         for c,i in enumerate(r):
             temp = temp.append({"hz":i, "db":row.iloc[2+c]}, ignore_index=True)
 
-    d = {
+    return {
         "date":date,
         "time":time,
         "bins":bins,
         "samples":samples,
         "data":temp.to_json(orient="records")
     }
-
-    return d
