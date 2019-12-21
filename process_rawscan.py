@@ -14,9 +14,9 @@ from dotenv import load_dotenv
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
-saving = os.environ.get("SAVE_DIR")
-temp = os.environ.get("TEMP_DIR")
-edge = os.environ.get("EDGE")
+saving = os.getenv("SAVE_DIR", "data")
+temp = os.getenv("TEMP_DIR", "temp")
+edge = os.getenv("EDGE", "0")
 
 filename = sys.argv[1] #If this fails it means that the process was involved improperly
 scan = pd.read_csv(filename, delimiter=",", names=["Date","Time","hz_low","hz_high","hz_bin","n_samples","db1","db2","db3","db4","db5"])
@@ -33,11 +33,6 @@ if bool(int(edge)):
 else:
     # This will divy out the processing if it wasn't enabled on the edge computer
     json_scan = scan
-
-# GPS data if possible
-gps_info = gps_scan()
-if gps_info:
-    json_scan.update(gps_info)
     
 full_data = {
     "metadata": {
