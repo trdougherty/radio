@@ -19,13 +19,18 @@ def gps_scan():
 				if not data.geo_sep:
 					data.altitude = None
 
-				return {
+				gps_data = {
 					"lat": data.latitude,
 					"lon": data.longitude,
 					"alt": data.altitude
 				}
+				print gps_data
+				return gps_data
 
 			except:
 				pass
 
 	return None
+
+if __name__ == "__main__":
+    gps_scan()
