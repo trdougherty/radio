@@ -1,3 +1,5 @@
 .env
 temp/
 data/
+python_error*
+bash_error*
