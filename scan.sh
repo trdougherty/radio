@@ -6,7 +6,7 @@ D=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 temp_filename=$D".txt"
 
 # gets the temp directory ready to roll
-mkdir -p $TEMP_DIR
+mkdir -p ${TEMP_DIR:="temp"}
 timeout --signal=SIGQUIT 5 hackrf_sweep -1 -r $TEMP_DIR/$temp_filename 2> bash_error.txt
 
 if [ -s $TEMP_DIR/$temp_filename ];
