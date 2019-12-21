@@ -1,10 +1,14 @@
 import serial
 import pynmea2
 import time
+import os
+
+from dotenv import load_dotenv
+load_dotenv(verbose=True)
 
 def gps_scan():
 	# All specific to the rapsberrypi's UART communication
-	serialStream = serial.Serial("/dev/ttyAMA0", 9600, timeout=0.5)
+	serialStream = serial.Serial(os.getenv("PORT"), os.getenv("BAUD"), timeout=0.5)
 	start = end = time.time()
 	while end - start < 5:
 		end = time.time()
