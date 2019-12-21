@@ -1,5 +1,5 @@
 # Load env variables
-source ./exp.env
+source .env
 
 # Shows the time in universal formatting
 D=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
