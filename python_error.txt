@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "process_rawscan.py", line 7, in <module>
-    from gps_scan import gps_scan
-  File "/Users/thomas/Desktop/Work/Research/uil/radio/pi/gps_scan.py", line 1, in <module>
-    import serial
-ModuleNotFoundError: No module named 'serial'

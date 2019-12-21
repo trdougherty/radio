@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "process_rawscan.py", line 31, in <module>
+    with gzip.GzipFile(saving+"/"+file_base+".json.gz", 'w') as outfile:
+  File "/usr/lib/python2.7/gzip.py", line 94, in __init__
+    fileobj = self.myfileobj = __builtin__.open(filename, mode or 'rb')
+IOError: [Errno 2] No such file or directory: 'data/temp/2019-12-21T01:20:15Z_sweep.json.gz'
