@@ -16,6 +16,7 @@ load_dotenv(dotenv_path)
 
 saving = os.environ.get("SAVE_DIR")
 temp = os.environ.get("TEMP_DIR")
+edge = os.environ.get("EDGE")
 
 filename = sys.argv[1] #If this fails it means that the process was involved improperly
 scan = pd.read_csv(filename, delimiter=",", names=["Date","Time","hz_low","hz_high","hz_bin","n_samples","db1","db2","db3","db4","db5"])
@@ -23,13 +24,28 @@ scan = pd.read_csv(filename, delimiter=",", names=["Date","Time","hz_low","hz_hi
 # This gets the base name for the file
 file_base = os.path.splitext(filename)[0]
 
+# GPS data if possible
+gps_info = gps_scan()
+
 # Meat and bones of the processing
-json_scan = convert_json(scan)
+if bool(int(edge)):
+    json_scan = convert_json(scan)
+else:
+    # This will divy out the processing if it wasn't enabled on the edge computer
+    json_scan = scan
 
 # GPS data if possible
 gps_info = gps_scan()
 if gps_info:
     json_scan.update(gps_info)
+    
+full_data = {
+    "metadata": {
+        "edge": edge,
+        "gps": gps_info
+    },
+    "data": json_scan
+}
 
 # Makes the directory if it doesn't already exist
 print(saving)
@@ -38,6 +54,6 @@ if not os.path.exists(saving):
 
 # Compresses the files so we can save them and removes the uncompressed originals
 with gzip.open(saving+"/"+strip_prefix(file_base, temp +"/")+".json.gz", 'wt') as zipfile:
-    json.dump(json_scan, zipfile)
+    json.dump(full_data, zipfile)
 
 os.remove(filename)
