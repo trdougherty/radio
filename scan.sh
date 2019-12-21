@@ -12,7 +12,7 @@ timeout --signal=SIGQUIT 5 hackrf_sweep -1 -r $TEMP_DIR/$temp_filename 2> bash_e
 status=$?
 echo $status
 
-if [ ! -s $TEMP_DIR/$temp_filename ];
+if [ -s $TEMP_DIR/$temp_filename ];
 then
 	echo "Processing scan..."
 	# Process that text into some kind of meaningful data representation
