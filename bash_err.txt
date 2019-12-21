@@ -1,0 +1,28 @@
+call hackrf_sample_rate_set(20.000 MHz)
+call hackrf_baseband_filter_bandwidth_set(15.000 MHz)
+Sweeping from 0 MHz to 6000 MHz
+Stop with Ctrl-C
+0 total sweeps completed, 0.00 sweeps/second
+0 total sweeps completed, 0.00 sweeps/second
+0 total sweeps completed, 0.00 sweeps/second
+0 total sweeps completed, 0.00 sweeps/second
+0 total sweeps completed, 0.00 sweeps/second
+0 total sweeps completed, 0.00 sweeps/second
+0 total sweeps completed, 0.00 sweeps/second
+0 total sweeps completed, 0.00 sweeps/second
+0 total sweeps completed, 0.00 sweeps/second
+0 total sweeps completed, 0.00 sweeps/second
+0 total sweeps completed, 0.00 sweeps/second
+0 total sweeps completed, 0.00 sweeps/second
+0 total sweeps completed, 0.00 sweeps/second
+0 total sweeps completed, 0.00 sweeps/second
+0 total sweeps completed, 0.00 sweeps/second
+1 total sweeps completed, 1.24 sweeps/second
+
+Exiting...
+Total sweeps: 1 in 0.80691 seconds (1.24 sweeps/second)
+hackrf_stop_rx() done
+hackrf_close() done
+hackrf_exit() done
+fclose(fd) done
+exit
