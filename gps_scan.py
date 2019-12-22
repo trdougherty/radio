@@ -7,10 +7,24 @@ from dotenv import load_dotenv
 load_dotenv(verbose=True)
 
 def gps_scan():
+	found = helper()
+	if found:
+		return {
+			"lat": found["lat"],
+			"lon": found["lon"],
+			"alt": found["alt"]
+		}
+ 
+def get_time():
+    found = helper()
+    if found:
+        return found["time"]
+
+def helper():
 	# All specific to the rapsberrypi's UART communication
 	serialStream = serial.Serial(os.getenv("PORT", "/dev/ttyAMA0"), os.getenv("BAUD", "9600"), timeout=0.5)
 	start = end = time.time()
-	while True: #end - start < 5:
+	while end - start < 5:
 		end = time.time()
 		sentence = serialStream.readline()
 		if sentence.find('GGA') > 0:
@@ -19,9 +33,8 @@ def gps_scan():
 				if not data.geo_sep:
 					data.altitude = None
      
-				time = data.timestamp
-				print time
 				gps_data = {
+					"time": data.timestamp,
 					"lat": data.latitude,
 					"lon": data.longitude,
 					"alt": data.altitude
