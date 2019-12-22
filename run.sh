@@ -6,6 +6,7 @@ try() { "$@" || die "cannot $*"; }
 # Check if we have internet
 CON=$(ping -c 1 google.com | wc -l)
 if [ $CON -eq 0 ]; then
+    printf "Capturing time from GPS...\n"
     RES=$(python -c 'import gps_scan; from gps_scan import get_time; print get_time()')
     if [ $RES -ne "None" ]; then
     ## Set time here
@@ -19,8 +20,6 @@ try(){
     source .env
     bash mount_storage.sh 2> storage_error.txt
 }
-
-
 
 # Now it checks for the radio - if it exists
 if [ !$(lsusb | grep HackRF | wc -l) ]
