@@ -36,10 +36,10 @@ gps_info = gps_scan()
 
 # Meat and bones of the processing
 if bool(int(edge)):
-    json_scan = convert_json(scan)
+    json_scan = json.dumps(convert_json(scan))
 else:
     # This will divy out the processing if it wasn't enabled on the edge computer
-    json_scan = scan
+    json_scan = scan.to_string()
     
 full_data = {
     "metadata": {
@@ -59,7 +59,6 @@ if not os.path.exists(saving):
     os.makedirs(saving)
 
 # Compresses the files so we can save them and removes the uncompressed originals
-# js_dumps = json.dumps(full_data)
 with open(saving+"/"+strip_prefix(file_base, temp +"/")+".json.gz",'w') as f:
     json.dump(full_data, f)
 
