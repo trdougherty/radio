@@ -1,6 +1,7 @@
 # Load env variables
 source .env
 
+printf "Scanning Commence.\n"
 # Shows the time in universal formatting
 D=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 temp_filename=$D".txt"
@@ -12,13 +13,10 @@ timeout -k 10 5 hackrf_sweep -1 -r $TEMP_DIR/$temp_filename 2> bash_error.txt
 
 if [ -s $TEMP_DIR/$temp_filename ];
 then
-	echo "Processing scan..."
-    # Gives an idea of what's happening
+    echo "Processing scan..."
     head $TEMP_DIR/$temp_filename
     printf "\n"
-	# Process that text into some kind of meaningful data representation
-	bash -c "python process_rawscan.py $TEMP_DIR/$temp_filename" 2> python_error.txt
+    python process_rawscan.py $TEMP_DIR/$temp_filename 2> python_error.txt
 else	
-	echo "Process failed."
-	rm $TEMP_DIR/$temp_filename
+    echo "Process failed."
 fi
