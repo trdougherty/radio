@@ -61,6 +61,6 @@ if not os.path.exists(saving):
 
 # Yeah going to just leave this for now because it works and 
 with open(saving+"/"+strip_prefix(file_base, temp +"/")+".json.gz",'w') as f:
-    json.dumps(full_data, f)
+    json.dump(full_data, f)
 
 os.remove(filename)
