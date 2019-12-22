@@ -59,8 +59,11 @@ if not os.path.exists(saving):
     os.makedirs(saving)
 
 # Compresses the files so we can save them and removes the uncompressed originals
-js_dumps = json.dumps(full_data)
-with gzip.open(saving+"/"+strip_prefix(file_base, temp +"/")+".json.gz","w") as f:
-    f.write(js_dumps)
+# js_dumps = json.dumps(full_data)
+with open(saving+"/"+strip_prefix(file_base, temp +"/")+".json.gz",'w') as f:
+    json.dump(full_data, f)
+
+# with gzip.open(saving+"/"+strip_prefix(file_base, temp +"/")+".json.gz","w") as f:
+#     f.write(js_dumps)
 
 os.remove(filename)
