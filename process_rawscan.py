@@ -8,11 +8,11 @@ from gps_scan import gps_scan
 from compression import convert_json
 from strip_prefix import strip_prefix
 
-from os.path import join, dirname
+from os.path import join, dirname, realpath, splitext
 from dotenv import load_dotenv
 from json_zip import json_zip
 
-dotenv_path = join(dirname(__file__), '.env')
+dotenv_path = join(dirname(realpath(__file__)), '.env')
 load_dotenv(dotenv_path)
 
 # This will terminate the program if there is no name. Don't be mean. Give your child a name.
@@ -25,14 +25,18 @@ scientist = os.getenv("SCIENTIST")
 low = os.getenv("LOW", "0")
 high = os.getenv("HIGH", "6000000000")
 
-print "Arguments: ", sys.argv
+# Current path
+current_path = dirname(realpath(__file__))
 
-filename = sys.argv[1] #If this fails it means that the process was involved improperly
+arguments = sys.argv
+print "Arguments: ", arguments
+
+filename = arguments[1] #If this fails it means that the process was involved improperly
 print "Extracting file from: ", filename
-file_base = os.path.splitext(filename)[0] # Base name of the file
+file_base = splitext(filename)[0] # Base name of the file
 
-saving = sys.argv[2] #The storage directory
-print "Target save folder: ", storage
+saving = join(current_path, arguments[2]) #The storage directory
+print "Target save folder: ", saving
 
 # Extracts the scan from temp storage
 scan = pd.read_csv(filename, delimiter=",", names=["Date","Time","hz_low","hz_high","hz_bin","n_samples","db1","db2","db3","db4","db5"])
@@ -64,7 +68,6 @@ full_data = {
 if not os.path.exists(saving):
     os.makedirs(saving)
 
-# Yeah going to just leave this for now because it works and 
 with open(saving+"/"+strip_prefix(file_base, temp +"/")+".json",'w') as f:
     json.dump(full_data, f)
 
