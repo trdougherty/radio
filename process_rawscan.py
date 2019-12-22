@@ -25,6 +25,8 @@ scientist = os.getenv("SCIENTIST")
 low = os.getenv("LOW", "0")
 high = os.getenv("HIGH", "6000000000")
 
+print "Arguments: ", sys.argv
+
 filename = sys.argv[1] #If this fails it means that the process was involved improperly
 print "Extracting file from: ", filename
 file_base = os.path.splitext(filename)[0] # Base name of the file

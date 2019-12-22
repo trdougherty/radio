@@ -9,6 +9,7 @@ printf $temp_filename"\n"
 
 # Gets the permanant storage solution which was passed into the system
 STORAGE=$1
+echo "Input Storage: "$STORAGE
 
 # gets the temp directory ready to roll
 mkdir -p ${TEMP_DIR:="temp"}
