@@ -13,29 +13,26 @@ def gps_scan():
 	while True: #end - start < 5:
 		end = time.time()
 		sentence = serialStream.readline()
-		try:
-			data = pynmea2.parse(sentence)
-			print data
-		except:
-			pass
-	# 	if sentence.find('GGA') > 0:
-	# 		try:
-	# 			data = pynmea2.parse(sentence)
-	# 			if not data.geo_sep:
-	# 				data.altitude = None
+		if sentence.find('GGA') > 0:
+			try:
+				data = pynmea2.parse(sentence, check=False)
+				if not data.geo_sep:
+					data.altitude = None
+     
+				time = data.timestamp
+				print time
+				gps_data = {
+					"lat": data.latitude,
+					"lon": data.longitude,
+					"alt": data.altitude
+				}
+				print gps_data
+				return gps_data
 
-	# 			gps_data = {
-	# 				"lat": data.latitude,
-	# 				"lon": data.longitude,
-	# 				"alt": data.altitude
-	# 			}
-	# 			print gps_data
-	# 			return gps_data
+			except:
+				pass
 
-	# 		except:
-	# 			pass
-
-	# return None
+	return None
 
 if __name__ == "__main__":
     gps_scan()
