@@ -10,6 +10,7 @@ from strip_prefix import strip_prefix
 
 from os.path import join, dirname
 from dotenv import load_dotenv
+from json_zip import json_zip
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -36,10 +37,11 @@ gps_info = gps_scan()
 
 # Meat and bones of the processing
 if bool(int(edge)):
-    json_scan = json.dumps(convert_json(scan))
+    # This should work..? Haven't really tested it
+    json_scan = convert_json(scan) # -> this will return a dictionary
 else:
     # This will divy out the processing if it wasn't enabled on the edge computer
-    json_scan = scan.to_string()
+    json_scan = scan.to_json(orient='records') # -> this returns a pretty big string
     
 full_data = {
     "metadata": {
@@ -50,19 +52,15 @@ full_data = {
         "edge": edge,
         "gps": gps_info
     },
-    "data": json_scan
+    "data": json_zip(json_scan)
 }
 
 # Makes the directory if it doesn't already exist
-print(saving)
 if not os.path.exists(saving):
     os.makedirs(saving)
 
-# Compresses the files so we can save them and removes the uncompressed originals
+# Yeah going to just leave this for now because it works and 
 with open(saving+"/"+strip_prefix(file_base, temp +"/")+".json.gz",'w') as f:
-    json.dump(full_data, f)
-
-# with gzip.open(saving+"/"+strip_prefix(file_base, temp +"/")+".json.gz","w") as f:
-#     f.write(js_dumps)
+    json.dumps(full_data, f)
 
 os.remove(filename)
