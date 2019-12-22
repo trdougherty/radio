@@ -11,6 +11,11 @@ try(){
 
 # Now it checks for the radio - if it exists
 if [ !$(lsusb | grep HackRF | wc -l) ]
-then
-echo "Found HackRF"
+then printf "Found HackRF. Commencing stage two.\n"
+else exit 1
 fi
+
+# Scan into oblivion
+while true; do
+bash scan.sh
+done
