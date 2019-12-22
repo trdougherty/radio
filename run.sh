@@ -1,3 +1,5 @@
+source .env
+
 # Import Three-Finger Claw as TFC
 yell() { echo "$0: $*" >&2; }
 die() { yell "$*"; exit 111; }
@@ -16,18 +18,21 @@ if [ $CON -eq 0 ]; then
 fi
 
 # Starts mounting process
-try(){
-    source .env
-    bash mount_storage.sh 2> storage_error.txt
-}
+if [ ${MOUNTING:=false} ];then
+    STORAGE_DIR=$STORAGE
+    try(){ bash mount_storage.sh 2> storage_error.txt }
+else 
+    STORAGE_DIR=$LOCAL_STORAGE
+fi
 
 # Now it checks for the radio - if it exists
-if [ !$(lsusb | grep HackRF | wc -l) ]
-then printf "Found HackRF. Commencing stage two.\n"
-else exit 1
+if [ !$(lsusb | grep HackRF | wc -l) ]; then 
+    printf "Found HackRF. Commencing stage two.\n"
+else 
+    exit 1
 fi
 
 # Scan into oblivion
 while true; do
-bash scan.sh
+    bash scan.sh $STORAGE_DIR
 done
