@@ -4,6 +4,7 @@ source .env
 # Shows the time in universal formatting
 D=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 temp_filename=$D".txt"
+printf $temp_filename"\n"
 
 # gets the temp directory ready to roll
 mkdir -p ${TEMP_DIR:="temp"}
@@ -14,8 +15,9 @@ then
 	echo "Processing scan..."
     # Gives an idea of what's happening
     head $TEMP_DIR/$temp_filename
+    printf "\n"
 	# Process that text into some kind of meaningful data representation
-	bash -c "python process_rawscan.py $TEMP_DIR/$temp_filename 2> python_error.txt"
+	bash -c "python process_rawscan.py $TEMP_DIR/$temp_filename" 2> python_error.txt
 else	
 	echo "Process failed."
 	rm $TEMP_DIR/$temp_filename
