@@ -27,6 +27,7 @@ low = os.getenv("LOW", "0")
 high = os.getenv("HIGH", "6000000000")
 
 filename = sys.argv[1] #If this fails it means that the process was involved improperly
+print filename
 scan = pd.read_csv(filename, delimiter=",", names=["Date","Time","hz_low","hz_high","hz_bin","n_samples","db1","db2","db3","db4","db5"])
 
 # This gets the base name for the file
