@@ -14,9 +14,16 @@ from dotenv import load_dotenv
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
+# This will terminate the program if there is no name. Don't be mean. Give your child a name.
+name = os.getenv("NAME")
 saving = os.getenv("SAVE_DIR", "data")
 temp = os.getenv("TEMP_DIR", "temp")
 edge = os.getenv("EDGE", "0")
+antenna = os.getenv("ANTENNA", "0")
+samples = os.getenv("SAMPLES", "20")
+scientist = os.getenv("SCIENTIST")
+low = os.getenv("LOW", "0")
+high = os.getenv("HIGH", "6000000000")
 
 filename = sys.argv[1] #If this fails it means that the process was involved improperly
 scan = pd.read_csv(filename, delimiter=",", names=["Date","Time","hz_low","hz_high","hz_bin","n_samples","db1","db2","db3","db4","db5"])
@@ -36,6 +43,10 @@ else:
     
 full_data = {
     "metadata": {
+        "name": name,
+        "scientist": scientist,
+        "antenna": antenna,
+        "samples": samples,
         "edge": edge,
         "gps": gps_info
     },
