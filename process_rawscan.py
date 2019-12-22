@@ -17,7 +17,6 @@ load_dotenv(dotenv_path)
 
 # This will terminate the program if there is no name. Don't be mean. Give your child a name.
 name = os.getenv("NAME")
-saving = os.getenv("SAVE_DIR", "data")
 temp = os.getenv("TEMP_DIR", "temp")
 edge = os.getenv("EDGE", "0")
 antenna = os.getenv("ANTENNA", "0")
@@ -27,11 +26,14 @@ low = os.getenv("LOW", "0")
 high = os.getenv("HIGH", "6000000000")
 
 filename = sys.argv[1] #If this fails it means that the process was involved improperly
-print filename
-scan = pd.read_csv(filename, delimiter=",", names=["Date","Time","hz_low","hz_high","hz_bin","n_samples","db1","db2","db3","db4","db5"])
+print "Extracting file from: ", filename
+file_base = os.path.splitext(filename)[0] # Base name of the file
 
-# This gets the base name for the file
-file_base = os.path.splitext(filename)[0]
+saving = sys.argv[2] #The storage directory
+print "Target save folder: ", storage
+
+# Extracts the scan from temp storage
+scan = pd.read_csv(filename, delimiter=",", names=["Date","Time","hz_low","hz_high","hz_bin","n_samples","db1","db2","db3","db4","db5"])
 
 # GPS data if possible
 gps_info = gps_scan()
