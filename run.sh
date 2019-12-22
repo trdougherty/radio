@@ -4,7 +4,13 @@ die() { yell "$*"; exit 111; }
 try() { "$@" || die "cannot $*"; }
 
 # Starts mounting process
-source .env
-bash mount_storage.sh 2> storage_error.txt
+try(){
+    source .env
+    bash mount_storage.sh 2> storage_error.txt
+}
 
 # Now it checks for the radio - if it exists
+if [ !$(lsusb | grep HackRF | wc -l) ]
+then
+echo "Found HackRF"
+fi

@@ -15,7 +15,7 @@ then
     # Gives an idea of what's happening
     head $TEMP_DIR/$temp_filename
 	# Process that text into some kind of meaningful data representation
-	python process_rawscan.py $TEMP_DIR/$temp_filename 2> python_error.txt
+	bash -c "python process_rawscan.py $TEMP_DIR/$temp_filename 2> python_error.txt"
 else	
 	echo "Process failed."
 	rm $TEMP_DIR/$temp_filename
