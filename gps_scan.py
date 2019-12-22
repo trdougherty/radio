@@ -10,27 +10,32 @@ def gps_scan():
 	# All specific to the rapsberrypi's UART communication
 	serialStream = serial.Serial(os.getenv("PORT", "/dev/ttyAMA0"), os.getenv("BAUD", "9600"), timeout=0.5)
 	start = end = time.time()
-	while end - start < 5:
+	while True: #end - start < 5:
 		end = time.time()
 		sentence = serialStream.readline()
-		if sentence.find('GGA') > 0:
-			try:
-				data = pynmea2.parse(sentence)
-				if not data.geo_sep:
-					data.altitude = None
+		try:
+			data = pynmea2.parse(sentence)
+			print data
+		except:
+			pass
+	# 	if sentence.find('GGA') > 0:
+	# 		try:
+	# 			data = pynmea2.parse(sentence)
+	# 			if not data.geo_sep:
+	# 				data.altitude = None
 
-				gps_data = {
-					"lat": data.latitude,
-					"lon": data.longitude,
-					"alt": data.altitude
-				}
-				print gps_data
-				return gps_data
+	# 			gps_data = {
+	# 				"lat": data.latitude,
+	# 				"lon": data.longitude,
+	# 				"alt": data.altitude
+	# 			}
+	# 			print gps_data
+	# 			return gps_data
 
-			except:
-				pass
+	# 		except:
+	# 			pass
 
-	return None
+	# return None
 
 if __name__ == "__main__":
     gps_scan()
