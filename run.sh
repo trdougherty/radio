@@ -20,8 +20,9 @@ fi
 
 # Starts mounting process
 if [ ${MOUNTING:=false} ];then
+    printf "Mounting external drive...\n"
     STORAGE_DIR=$STORAGE;
-    try(){ bash mount_storage.sh 2> storage_error.txt };
+    # try(){ bash mount_storage.sh 2> storage_error.txt };
 else
     STORAGE_DIR=$LOCAL_STORAGE
 fi
