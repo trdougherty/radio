@@ -11,7 +11,6 @@ def string_normalization(filename):
     return join(dirname(realpath(__file__)), filename)
 
 def encoder(message, public_key):
-    #message = unicode(message, 'utf-8').encode()
     public_key = string_normalization(public_key)
     with open(public_key, "rb") as key_file:
         public_key = serialization.load_pem_public_key(
