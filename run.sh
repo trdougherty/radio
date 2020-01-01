@@ -10,7 +10,7 @@ while true; do
     CON=$(ping -c 1 google.com | wc -l)
     if [ $CON -gt 0 ]; then # For a temporary fix to incorrect time, we're going to only record when we can validate time with the internet
         # Now it checks for the radio - if it exists
-        if [ !$(lsusb | grep HackRF | wc -l) ]; then 
+        if [ $(lsusb | grep HackRF | wc -l) -gt 0 ]; then 
             printf "Found HackRF. Commencing stage two.\n"
             bash scan.sh $STORAGE_DIR
         fi
