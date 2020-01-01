@@ -15,6 +15,8 @@ while true; do
             printf "HackRF: %s\n" $HACKRF
             bash scan.sh
         fi
+    else
+	sleep 10
         # printf "Capturing time from GPS...\n"
         # RES=$(python -c 'import gps_scan; from gps_scan import get_time; print get_time()')
         # if [ $RES -ne "None" ]; then
