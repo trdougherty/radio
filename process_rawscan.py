@@ -24,6 +24,7 @@ samples = os.getenv("SAMPLES", "20")
 scientist = os.getenv("SCIENTIST")
 low = os.getenv("LOW", "0")
 high = os.getenv("HIGH", "6000000000")
+storage = os.getenv("STORAGE", "storage")
 
 # Current path
 current_path = dirname(realpath(__file__))
@@ -35,7 +36,7 @@ filename = arguments[1] #If this fails it means that the process was involved im
 print "Extracting file from: ", filename
 file_base = splitext(filename)[0] # Base name of the file
 
-saving = join(current_path, arguments[2]) #The storage directory
+saving = join(current_path, storage) #The storage directory
 print "Target save folder: ", saving
 
 # Extracts the scan from temp storage

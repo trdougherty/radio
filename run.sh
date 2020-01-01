@@ -12,7 +12,7 @@ while true; do
         # Now it checks for the radio - if it exists
         if [ $(lsusb | grep HackRF | wc -l) -gt 0 ]; then 
             printf "Found HackRF. Commencing stage two.\n"
-            bash scan.sh $STORAGE_DIR
+            bash scan.sh
         fi
         # printf "Capturing time from GPS...\n"
         # RES=$(python -c 'import gps_scan; from gps_scan import get_time; print get_time()')
