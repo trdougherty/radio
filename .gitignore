@@ -5,3 +5,4 @@ temp/
 data/
 python_error*
 bash_error*
+error_files/
