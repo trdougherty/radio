@@ -35,7 +35,6 @@ def upload(directory, filename):
         d_string = json.dumps(d)
         encoded = encoder(d_string, public_keyname)
         req = requests.post(remote, json=encoded)
-        print req.status_code
         if (req.status_code == 200): #aka data was successfully recieved and interpreted without a problem
             os.remove(filename_full)
             return
@@ -44,7 +43,6 @@ def upload(directory, filename):
             time.sleep(10)
             return
         else:
-            print "Failed to upload - need to make new folder."
             if not os.path.isdir(error_fullpath): os.makedirs(error_fullpath)
             os.rename(filename_full, os.path.join(error_fullpath, filename))
             return
