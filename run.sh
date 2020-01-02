@@ -7,22 +7,26 @@ source .env
 
 while true; do
     # Check if we have internet
-    CON=$(ping -c 1 google.com | wc -l)
-    if [ $CON -gt 0 ]; then # For a temporary fix to incorrect time, we're going to only record when we can validate time with the internet
-        # Now it checks for the radio - if it exists
-        HACKRF=$(lsusb | grep HackRF | wc -l)
-        if [ $HACKRF -gt 0 ]; then 
-            printf "HackRF: %s\n" $HACKRF
-            bash scan.sh
+    {
+        CON=$(ping -c 1 google.com | wc -l)
+        if [ $CON -gt 0 ]; then # For a temporary fix to incorrect time, we're going to only record when we can validate time with the internet
+            # Now it checks for the radio - if it exists
+            HACKRF=$(lsusb | grep HackRF | wc -l)
+            if [ $HACKRF -gt 0 ]; then 
+                printf "HackRF: %s\n" $HACKRF
+                bash scan.sh
+            fi
+            # printf "Capturing time from GPS...\n"
+            # RES=$(python -c 'import gps_scan; from gps_scan import get_time; print get_time()')
+            # if [ $RES -ne "None" ]; then
+            # ## Set time here
+            # # sudo date -s $RES
+            # CON=1
+            # fi
         fi
-        # printf "Capturing time from GPS...\n"
-        # RES=$(python -c 'import gps_scan; from gps_scan import get_time; print get_time()')
-        # if [ $RES -ne "None" ]; then
-        # ## Set time here
-        # # sudo date -s $RES
-        # CON=1
-        # fi
-    fi
+    } || {
+        sleep 10
+    }
 done
 
 # This needs some work...
