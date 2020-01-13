@@ -1,6 +1,11 @@
 # Load env variables
 source .env
 
+echo "23" > /sys/class/gpio/export  
+# Sets pin 18 as an output
+echo "out" > /sys/class/gpio/gpio23/direction
+echo "0" > /sys/class/gpio/gpio23/value
+
 printf "Scanning Commence.\n"
 # Shows the time in universal formatting
 D=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
@@ -19,4 +24,5 @@ then
     python process_rawscan.py $TEMP_DIR/$temp_filename 2> python_error.txt
 else	
     echo "Process failed.\n\n"
+    echo "1" > /sys/class/gpio/gpio23/value
 fi

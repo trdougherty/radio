@@ -5,6 +5,7 @@ dotenv.load_dotenv()
 
 # Local functions
 from upload import upload
+from gpiozero import LED
 
 
 def files(path):

@@ -8,3 +8,4 @@ python_error*
 bash_error*
 error_files/
 storage/
+temp_storage/
