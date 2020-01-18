@@ -15,7 +15,7 @@ while true; do
         HACKRF=$(lsusb | grep HackRF | wc -l)
         if [ $HACKRF -gt 0 ]; then 
             printf "HackRF: %s\n" $HACKRF
-            setLightState $BLUE $ON
+            setLightState $BLUE $ON 1
             bash scan.sh
             setLightState $BLUE $OFF
         fi

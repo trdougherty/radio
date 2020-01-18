@@ -31,7 +31,8 @@ setOutput(){
 # Utility function to change state of a light
 setLightState(){ 
     buckstop;
-    echo $2 > $BASE_GPIO_PATH/gpio$1/value 
+    echo $2 > $BASE_GPIO_PATH/gpio$1/value;
+    sleep ${3-"0"}
     }
 
 setup(){
