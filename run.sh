@@ -17,6 +17,7 @@ while true; do
             printf "HackRF: %s\n" $HACKRF
             setLightState $BLUE $ON
             bash scan.sh
+            setLightState $BLUE $OFF
         fi
     } || {
         sleep 10
