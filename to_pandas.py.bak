@@ -1,4 +1,3 @@
-from __future__ import print_function
 import os
 import sys
 import dotenv
@@ -26,4 +25,4 @@ def decompress(incoming):
 if __name__ == "__main__":
     filename = join(dirname(__file__), "data/storage/2019-12-23T03:04:53Z.json")
     d = decompress(filename);
-    print(d['data'])
+    print d['data']

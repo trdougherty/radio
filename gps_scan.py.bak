@@ -1,4 +1,3 @@
-from __future__ import print_function
 import serial
 import pynmea2
 import time
@@ -40,7 +39,7 @@ def helper():
 					"lon": data.longitude,
 					"alt": data.altitude
 				}
-				print(gps_data)
+				print gps_data
 				return gps_data
 
 			except:

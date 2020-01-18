@@ -1,6 +1,5 @@
 ## This was taken from github user @busybus
 
-from builtins import str
 import zlib, json, base64
 
 ZIPJSON_KEY = 'base64(zip(o))'

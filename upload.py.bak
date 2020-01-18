@@ -1,4 +1,3 @@
-from __future__ import print_function
 import os, sys
 import json
 import requests
@@ -48,12 +47,12 @@ def upload(directory, filename):
             os.rename(filename_full, os.path.join(error_fullpath, filename))
             return
     except requests.exceptions.RequestException as e:
-        print("Reuqest exception! Failed with error: ",e)
+        print "Reuqest exception! Failed with error: ",e
     except AssertionError as e:
-        print("JSON term is null - could not be loaded from data. Failed with error: ", e)
+        print "JSON term is null - could not be loaded from data. Failed with error: ", e
     except IOError as e:
-        print("Could not open file. Failed with error: ", e)
+        print "Could not open file. Failed with error: ", e
     except ValueError as e:
-        print("Error with JSON interpretation. Failed with error: ", e)
+        print "Error with JSON interpretation. Failed with error: ", e
     except Exception as e:
-        print("EXCEPTION: ",e.message, e.args)
+        print "EXCEPTION: ",e.message, e.args
