@@ -24,5 +24,8 @@ then
     python process_rawscan.py $TEMP_DIR/$temp_filename 2> python_error.txt
 else	
     echo "Process failed.\n\n"
-    echo "1" > /sys/class/gpio/gpio23/value
+    # This flashes a warning sign
+    setLightState $RED $ON
+    sleep 1
+    setLightState $RED $OFF
 fi
