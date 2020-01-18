@@ -5,6 +5,10 @@ source .gpio_env
 : ${GPIO:=0}
 : ${BASE_GPIO_PATH:=/sys/class/gpio}
 
+printf "GPIO status: %s\n" $GPIO
+
+printf "GPIO path: %s\n" $BASE_GPIO_PATH
+
 # This will terminate all functions if gpio not setup
 buckstop(){
     if [ $GPIO -eq 0 ]; then
@@ -56,7 +60,6 @@ allLightsOff(){
     }
 
 shutdown(){
-    buckstop;
     allLightsOff
     exit 0
 }
