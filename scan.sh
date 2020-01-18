@@ -25,7 +25,6 @@ then
 else	
     echo "Process failed.\n\n"
     # This flashes a warning sign
-    setLightState $RED $ON
-    sleep 1
+    setLightState $RED $ON 1
     setLightState $RED $OFF
 fi
