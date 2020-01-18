@@ -1,0 +1,9 @@
+# Assign names to GPIO pin numbers for each light
+RED=23
+YELLOW=27
+BLUE=17 # This will be the radio pin
+WHITE=22 # This will be the wifi pin
+
+# Assign names to states
+ON="1"
+OFF="0"

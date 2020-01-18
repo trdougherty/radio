@@ -1,10 +1,10 @@
 # Load env variables
 source .env
+source .gpio_env
 
-echo "23" > /sys/class/gpio/export  
-# Sets pin 18 as an output
-echo "out" > /sys/class/gpio/gpio23/direction
-echo "0" > /sys/class/gpio/gpio23/value
+source ./gpio.sh # gathers all of the functions we want
+trap shutdown SIGINT # This will turn all the lights off and shut the program down
+setup # sourced from gpio - this gets all of our pins ready
 
 printf "Scanning Commence.\n"
 # Shows the time in universal formatting
@@ -23,11 +23,6 @@ then
     printf "\n"
     python process_rawscan.py $TEMP_DIR/$temp_filename 2> python_error.txt
 else	
-<<<<<<< HEAD
     echo "Process failed.\n\n"
     echo "1" > /sys/class/gpio/gpio23/value
 fi
-=======
-    printf "Process failed.\n\n"
-fi
->>>>>>> 719141ee3ab1a7dfc787f0cfe5aa5e07faf78c90

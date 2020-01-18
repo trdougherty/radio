@@ -1,22 +1,21 @@
 source .env
+source .gpio_env
 
 # Import Three-Finger Claw as TFC
 # yell() { echo "$0: $*" >&2; }
 # die() { yell "$*"; exit 111; }
 # try() { "$@" || die "cannot $*"; }
 
-## Do something with the RTC
-echo "27" > /sys/class/gpio/export  
-# Sets pin 18 as an output
-echo "out" > /sys/class/gpio/gpio27/direction
+source ./gpio.sh # gathers all of the functions we want
+trap shutdown SIGINT # This will turn all the lights off and shut the program down
+setup # sourced from gpio - this gets all of our pins ready
 
 while true; do
-    # Check if we have internet
     {
         HACKRF=$(lsusb | grep HackRF | wc -l)
-        echo $HACKRF > /sys/class/gpio/gpio27/value
         if [ $HACKRF -gt 0 ]; then 
             printf "HackRF: %s\n" $HACKRF
+            setLightState $BLUE $ON
             bash scan.sh
         fi
     } || {
