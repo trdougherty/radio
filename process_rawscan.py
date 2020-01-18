@@ -34,6 +34,12 @@ print "Arguments: ", arguments
 
 filename = arguments[1] #If this fails it means that the process was involved improperly
 print "Extracting file from: ", filename
+
+#Temporary stop
+os.remove(filename)
+sys.exit(0)
+
+
 file_base = splitext(filename)[0] # Base name of the file
 
 saving = join(current_path, storage) #The storage directory
