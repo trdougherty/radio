@@ -4,6 +4,8 @@ import pynmea2
 import time
 import os
 
+import gps
+
 from dotenv import load_dotenv
 load_dotenv(verbose=True)
 
@@ -22,31 +24,25 @@ def get_time():
         return found["time"]
 
 def helper():
-	# All specific to the rapsberrypi's UART communication
-	serialStream = serial.Serial(os.getenv("PORT", "/dev/ttyAMA0"), os.getenv("BAUD", "9600"), timeout=0.5)
-	start = end = time.time()
-	while end - start < 5:
-		end = time.time()
-		sentence = serialStream.readline()
-		if sentence.find('GGA') > 0:
-			try:
-				data = pynmea2.parse(sentence, check=False)
-				if not data.geo_sep:
-					data.altitude = None
-     
-				gps_data = {
-					"time": data.timestamp,
-					"lat": data.latitude,
-					"lon": data.longitude,
-					"alt": data.altitude
-				}
-				print(gps_data)
-				return gps_data
-
-			except:
-				pass
-
-	return None
+	# Setting initial terms so we can run scans
+	counter = 0
+	initial_terms = 0
+	returning = {}
+	while counter < int(os.getenv("GPS_SCANS", 3)):
+		counter += 1
+		gps_data = gps.gather()
+		if gps_data:
+			ts = bool(gps_data["time"])
+			lat = bool(gps_data["lat"])
+			lon = bool(gps_data["lon"])
+			alt = bool(gps_data["alt"])
+  
+		count = ts + lat + lon + alt
+		if count > initial_terms:
+			returning = gps_data
+			initial_terms = count
+	
+	return returning
 
 if __name__ == "__main__":
     gps_scan()

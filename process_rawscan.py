@@ -8,75 +8,84 @@ import gzip
 from gps_scan import gps_scan
 from compression import convert_json
 from strip_prefix import strip_prefix
+from gpiozero import LED
 
 from os.path import join, dirname, realpath, splitext
 from dotenv import load_dotenv
 from json_zip import json_zip
 
 dotenv_path = join(dirname(realpath(__file__)), '.env')
+gpio_info = join(dirname(realpath(__file__)), '.gpio_env')
 load_dotenv(dotenv_path)
+load_dotenv(gpio_info)
+
+gpio_bool = os.getenv("GPIO")
+
+if gpio_bool:
+    red = os.getenv("RED")
+    error_led = LED(red)
 
 # This will terminate the program if there is no name. Don't be mean. Give your child a name.
-name = os.getenv("NAME")
-temp = os.getenv("TEMP_DIR", "temp")
-edge = os.getenv("EDGE", "0")
-antenna = os.getenv("ANTENNA", "0")
-samples = os.getenv("SAMPLES", "20")
-scientist = os.getenv("SCIENTIST")
-low = os.getenv("LOW", "0")
-high = os.getenv("HIGH", "6000000000")
-storage = os.getenv("STORAGE", "storage")
+try:
+    name = os.getenv("NAME")
+    temp = os.getenv("TEMP_DIR", "temp")
+    edge = os.getenv("EDGE", "0")
+    antenna = os.getenv("ANTENNA", "0")
+    samples = os.getenv("SAMPLES", "20")
+    scientist = os.getenv("SCIENTIST")
+    low = os.getenv("LOW", "0")
+    high = os.getenv("HIGH", "6000000000")
+    storage = os.getenv("STORAGE", "storage")
 
-# Current path
-current_path = dirname(realpath(__file__))
+    # Current path
+    current_path = dirname(realpath(__file__))
 
-arguments = sys.argv
-print("Arguments: ", arguments)
+    arguments = sys.argv
+    print("Arguments: ", arguments)
 
-filename = arguments[1] #If this fails it means that the process was involved improperly
-print("Extracting file from: ", filename)
+    filename = arguments[1] #If this fails it means that the process was involved improperly
+    print("Extracting file from: ", filename)
 
-#Temporary stop
-os.remove(filename)
-sys.exit(0)
+    file_base = splitext(filename)[0] # Base name of the file
 
+    saving = join(current_path, storage) #The storage directory
+    print("Target save folder: ", saving)
 
-file_base = splitext(filename)[0] # Base name of the file
+    # Extracts the scan from temp storage
+    scan = pd.read_csv(filename, delimiter=",", names=["Date","Time","hz_low","hz_high","hz_bin","n_samples","db1","db2","db3","db4","db5"])
 
-saving = join(current_path, storage) #The storage directory
-print("Target save folder: ", saving)
+    # GPS data if possible
+    gps_info = gps_scan()
 
-# Extracts the scan from temp storage
-scan = pd.read_csv(filename, delimiter=",", names=["Date","Time","hz_low","hz_high","hz_bin","n_samples","db1","db2","db3","db4","db5"])
+    # Meat and bones of the processing
+    if bool(int(edge)):
+        # This should work..? Haven't really tested it
+        json_scan = convert_json(scan) # -> this will return a dictionary
+    else:
+        # This will divy out the processing if it wasn't enabled on the edge computer
+        json_scan = scan.to_json(orient='records') # -> this returns a pretty big string
+        
+    full_data = {
+        "metadata": {
+            "name": name,
+            "scientist": scientist,
+            "antenna": antenna,
+            "samples": samples,
+            "edge": edge,
+            "gps": gps_info
+        },
+        "data": json_zip(json_scan)
+    }
 
-# GPS data if possible
-gps_info = gps_scan()
+    # Makes the directory if it doesn't already exist
+    if not os.path.exists(saving):
+        os.makedirs(saving)
 
-# Meat and bones of the processing
-if bool(int(edge)):
-    # This should work..? Haven't really tested it
-    json_scan = convert_json(scan) # -> this will return a dictionary
-else:
-    # This will divy out the processing if it wasn't enabled on the edge computer
-    json_scan = scan.to_json(orient='records') # -> this returns a pretty big string
-    
-full_data = {
-    "metadata": {
-        "name": name,
-        "scientist": scientist,
-        "antenna": antenna,
-        "samples": samples,
-        "edge": edge,
-        "gps": gps_info
-    },
-    "data": json_zip(json_scan)
-}
+    with open(saving+"/"+strip_prefix(file_base, temp +"/")+".json",'w') as f:
+        json.dump(full_data, f)
 
-# Makes the directory if it doesn't already exist
-if not os.path.exists(saving):
-    os.makedirs(saving)
+    os.remove(filename)
 
-with open(saving+"/"+strip_prefix(file_base, temp +"/")+".json",'w') as f:
-    json.dump(full_data, f)
-
-os.remove(filename)
+except:
+    if gpio_bool: error_led.on()
+    sys.exit(1)

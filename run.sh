@@ -10,6 +10,19 @@ source ./gpio.sh # gathers all of the functions we want
 trap shutdown SIGINT # This will turn all the lights off and shut the program down
 setup # sourced from gpio - this gets all of our pins ready
 
+# Sets the gps up
+python3 -c "import gps; gps.setup()"
+
+# Check if RTC is up and we've incorporated the correct time into the reading
+dt_verify=$(timedatectl | wc -l)
+while [ $dt_verify -eq 1 ];
+do
+    setLightState $RED $ON 1
+    setLightState $RED $OFF
+    dt_verify=$(timedatectl | wc -l)
+    sleep 1
+done
+
 while true; do
     {
         HACKRF=$(lsusb | grep HackRF | wc -l)
