@@ -4,11 +4,13 @@ import os
 import json
 import pandas as pd
 import gzip
+import time
 
 from gps_scan import gps_scan
 from compression import convert_json
 from strip_prefix import strip_prefix
 from gpiozero import LED
+from process_pandas import process_pandas
 
 from os.path import join, dirname, realpath, splitext
 from dotenv import load_dotenv
@@ -56,14 +58,12 @@ try:
 
     # GPS data if possible
     gps_info = gps_scan()
-
-    # Meat and bones of the processing
+    
     if bool(int(edge)):
-        # This should work..? Haven't really tested it
-        json_scan = convert_json(scan) # -> this will return a dictionary
-    else:
-        # This will divy out the processing if it wasn't enabled on the edge computer
-        json_scan = scan.to_json(orient='records') # -> this returns a pretty big string
+        scan = pandas_process(scan) # -> this will return a dictionary
+        
+    # Meat and bones of the processing
+    json_scan = scan.to_json(orient='records')
         
     full_data = {
         "metadata": {
@@ -87,5 +87,8 @@ try:
     os.remove(filename)
 
 except:
-    if gpio_bool: error_led.on()
+    if gpio_bool: 
+        error_led.on()
+        time.sleep(5)
+        error_led.off()
     sys.exit(1)
