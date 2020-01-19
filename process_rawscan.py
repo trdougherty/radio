@@ -10,7 +10,7 @@ from gps_scan import gps_scan
 from compression import convert_json
 from strip_prefix import strip_prefix
 from gpiozero import LED
-from process_pandas import process_pandas
+from pandas_process import pandas_process
 
 from os.path import join, dirname, realpath, splitext
 from dotenv import load_dotenv
