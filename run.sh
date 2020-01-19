@@ -14,12 +14,12 @@ setup # sourced from gpio - this gets all of our pins ready
 python3 -c "import gps; gps.setup()"
 
 # Check if RTC is up and we've incorporated the correct time into the reading
-dt_verify=$(timedatectl | wc -l)
+dt_verify=$({ timedatectl; } 2>&1 | wc -l)
 while [ $dt_verify -eq 1 ];
 do
     setLightState $RED $ON 1
     setLightState $RED $OFF
-    dt_verify=$(timedatectl | wc -l)
+    dt_verify=$({ timedatectl; } 2>&1 | wc -l)
     sleep 1
 done
 

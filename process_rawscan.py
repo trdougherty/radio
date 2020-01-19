@@ -77,6 +77,8 @@ try:
         "data": json_zip(json_scan)
     }
 
+    print(full_data)
+
     # Makes the directory if it doesn't already exist
     if not os.path.exists(saving):
         os.makedirs(saving)

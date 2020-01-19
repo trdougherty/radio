@@ -1,11 +1,8 @@
 source .env
 
-## This section is specific to raspberrypi for debugging and logging
-echo "17" > /sys/class/gpio/export
-echo "out" > /sys/class/gpio/gpio17/direction
-
 while true; do
-	if [ $CON -gt 0 ]; then 
+	ping -c1 google.com > /dev/null 2>&1
+	if [ $? -eq 0 ]; then 
 		printf "Uploading...\n"
 		python upload_manager.py
 	else
