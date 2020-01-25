@@ -58,6 +58,7 @@ try:
 
     # GPS data if possible
     gps_info = gps_scan()
+    print('GPS info: {}'.format(gps_info))
     
     if bool(int(edge)):
         scan = pandas_process(scan) # -> this will return a dictionary
@@ -77,13 +78,14 @@ try:
         "data": json_zip(json_scan)
     }
 
-    print(full_data)
+    print("Full Data: {}".format(full_data))
 
     # Makes the directory if it doesn't already exist
     if not os.path.exists(saving):
         os.makedirs(saving)
 
     with open(saving+"/"+strip_prefix(file_base, temp +"/")+".json",'w') as f:
+        print('Saving file to: {}'.format(saving))
         json.dump(full_data, f)
 
     os.remove(filename)

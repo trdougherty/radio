@@ -15,9 +15,11 @@ def files(path):
 
 if __name__ == "__main__":
     storage = os.getenv('LOCAL_STORAGE', 'storage')
-    storage_fullname = os.path.join(os.path.dirname(__file__),storage)
+    storage_fullname = os.path.join(os.path.dirname(os.path.abspath(__file__)),storage)
     while True:
         if os.path.isdir(storage_fullname):
+            print('Found File Directory: {}'.format(storage_fullname))
             for f in files(storage_fullname):
+                print('Current file uploading: {}'.format(f))
                 upload(storage_fullname, f)
 
