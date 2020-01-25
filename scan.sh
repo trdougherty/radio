@@ -18,7 +18,7 @@ timeout -k 10 5 hackrf_sweep -1 -r $TEMP_DIR/$temp_filename 2> bash_error.txt
 
 if [ -s $TEMP_DIR/$temp_filename ];
 then
-    printf "Processing scan..."
+    printf "Processing scan... \n"
     head $TEMP_DIR/$temp_filename
     printf "\n"
     python3 process_rawscan.py $TEMP_DIR/$temp_filename 2> python_error.txt
