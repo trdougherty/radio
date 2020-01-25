@@ -37,7 +37,9 @@ def helper():
 			lat = bool(gps_data["lat"])
 			lon = bool(gps_data["lon"])
 			alt = bool(gps_data["alt"])
-  
+		else:
+			ts = lat = lon = alt = False
+
 		count = ts + lat + lon + alt
 		if count > initial_terms:
 			returning = gps_data
