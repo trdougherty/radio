@@ -28,6 +28,7 @@ def helper():
 	counter = 0
 	initial_terms = 0
 	returning = {}
+	print('Initiating GPS scan...')
 	while counter < int(os.getenv("GPS_SCANS", 3)):
 		counter += 1
 		gps_data = gps.gather()
