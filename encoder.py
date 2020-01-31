@@ -27,8 +27,8 @@ def sync_encoder(message):
     encrypted = cipher_suite.encrypt(message)
     
     return {
-        'aes_string':key,
-        'data_encrypted':encrypted
+        'aes_string':key.decode(),
+        'data_encrypted':encrypted.decode()
     }
     
 def async_encoder(package, public_key):
