@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 source .env
 source .gpio_env
 

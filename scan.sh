@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Load env variables
 source .env
 source .gpio_env
