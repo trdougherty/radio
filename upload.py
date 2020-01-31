@@ -79,4 +79,4 @@ def upload(directory, filename):
     except ValueError as e:
         print("Error with JSON interpretation. Failed with error: ", e)
     except Exception as e:
-        print("EXCEPTION: ", e.message, e.args)
+        print("EXCEPTION: ", e)
