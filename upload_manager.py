@@ -21,11 +21,10 @@ if __name__ == "__main__":
     while True:
         if os.path.isdir(storage_fullname):
             print('Found File Directory: {}'.format(storage_fullname))
-            try:
-                for f in files(storage_fullname):
-                    print('Current file uploading: {}'.format(f))
-                    upload(storage_fullname, f)
-            except Exception as e:
-                print(f"Upload failed with exception: {e}")
-                break # This cuts on a network loss hopefully
+            for f in files(storage_fullname):
+                print('Current file uploading: {}'.format(f))
+                upload(storage_fullname, f)
+            # except Exception as e:
+            #     print(f"Upload failed with exception: {e}")
+            #     break # This cuts on a network loss hopefully
 
