@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import os
 
 import dotenv
@@ -19,7 +21,10 @@ if __name__ == "__main__":
     while True:
         if os.path.isdir(storage_fullname):
             print('Found File Directory: {}'.format(storage_fullname))
-            for f in files(storage_fullname):
-                print('Current file uploading: {}'.format(f))
-                upload(storage_fullname, f)
+            try:
+                for f in files(storage_fullname):
+                    print('Current file uploading: {}'.format(f))
+                    upload(storage_fullname, f)
+            except:
+                break # This cuts on a network loss hopefully
 
