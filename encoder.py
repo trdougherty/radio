@@ -20,6 +20,8 @@ def string_normalization(filename):
     return join(dirname(realpath(__file__)), filename)
 
 def sync_encoder(message):
+    assert type(message) == bytes
+    
     key = Fernet.generate_key()
     cipher_suite = Fernet(key)
     encrypted = cipher_suite.encrypt(message)

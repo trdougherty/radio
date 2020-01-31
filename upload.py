@@ -47,8 +47,10 @@ def upload(directory, filename):
     
     d.update({ 'name': name_kernel })
     d_string = json.dumps(d)
-    encoded = encoder(d_string, public_keyname)
+    d_string_as_bytes = str.encode(d_string)
+    encoded = encoder(d_string_as_bytes, public_keyname)
     req = requests.post(remote, json=encoded)
+    print(req.status_code)
     if (req.status_code == 200): #aka data was successfully recieved and interpreted without a problem
         if gpio_bool:
             upload_led.on()
