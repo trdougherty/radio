@@ -44,6 +44,8 @@ storage = os.getenv("STORAGE", "storage")
 current_path = dirname(realpath(__file__))
 
 arguments = sys.argv
+filename = arguments[1]
+
 print("Arguments: ", arguments)
 
 try:
