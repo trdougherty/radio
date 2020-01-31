@@ -21,7 +21,7 @@ then
     printf "Processing scan... \n"
     head $TEMP_DIR/$temp_filename
     printf "\n"
-    python3 process_rawscan.py $TEMP_DIR/$temp_filename 2> python_error.txt
+    ./process_rawscan.py $TEMP_DIR/$temp_filename 2> python_error.txt
 else	
     echo "Process failed.\n\n"
     # This flashes a warning sign

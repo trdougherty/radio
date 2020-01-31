@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from __future__ import print_function
 import sys
 import os
@@ -48,6 +50,7 @@ filename = arguments[1] #If this fails it means that the process was involved im
 print("Extracting file from: ", filename)
 
 file_base = splitext(filename)[0] # Base name of the file
+print(f"New filename: {file_base}")
 
 saving = join(current_path, storage) #The storage directory
 print("Target save folder: ", saving)
