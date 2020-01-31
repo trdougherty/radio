@@ -49,6 +49,12 @@ def upload(directory, filename):
     d_string = json.dumps(d)
     d_string_as_bytes = str.encode(d_string)
     encoded = encoder(d_string_as_bytes, public_keyname)
+    print(encoded)
+    print(type(encoded))
+    for i in encoded.keys():
+        current_type = type(encoded[i])
+        print(f"{i} type: {current_type}")
+
     req = requests.post(remote, json=encoded)
     print(req.status_code)
     if (req.status_code == 200): #aka data was successfully recieved and interpreted without a problem
