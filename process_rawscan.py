@@ -62,8 +62,15 @@ try:
     # GPS data if possible
     gps_info = gps_scan()
     print('GPS info: {}'.format(gps_info))
-    if not gps_info:
-        raise Exception('gps')
+    # if not gps_info:
+    #     raise Exception('gps')
+    
+    # This is a sample for trial purposes
+    gps_info = {
+			"lat": 37.4278,
+			"lon": -122.1752,
+			"alt": 0
+		}
 
     if bool(int(edge)):
         scan = pandas_process(scan) # -> this will return a dictionary
@@ -101,5 +108,5 @@ except Exception as ex:
             time.sleep(1)
             error_led.off()
     print('Process Rawscan failed with error: {}'.format(ex))
-
+    
 os.remove(filename)
