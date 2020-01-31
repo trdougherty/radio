@@ -73,10 +73,9 @@ try:
 		}
 
     if bool(int(edge)):
-        scan = pandas_process(scan) # -> this will return a dictionary
-        
-    # Meat and bones of the processing
-    json_scan = scan.to_json(orient='records')
+        json_scan = pandas_process(scan) # -> this will return a dictionary
+    else:
+        json_scan = scan.to_json(orient='records')
         
     full_data = {
         "metadata": {
