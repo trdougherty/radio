@@ -8,7 +8,7 @@ import pandas as pd
 import gzip
 import time
 
-from gps_scan import gps_scan
+# from gps_scan import gps_scan
 from compression import convert_json
 from strip_prefix import strip_prefix
 from gpiozero import LED
@@ -60,8 +60,10 @@ try:
     scan = pd.read_csv(filename, delimiter=",", names=["Date","Time","hz_low","hz_high","hz_bin","n_samples","db1","db2","db3","db4","db5"])
 
     # GPS data if possible
-    gps_info = gps_scan()
-    print('GPS info: {}'.format(gps_info))
+    
+    # gps_info = gps_scan()
+    # print('GPS info: {}'.format(gps_info))
+    
     # if not gps_info:
     #     raise Exception('gps')
     

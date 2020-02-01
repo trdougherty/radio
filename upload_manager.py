@@ -24,6 +24,8 @@ if __name__ == "__main__":
             for f in files(storage_fullname):
                 print('Current file uploading: {}'.format(f))
                 upload(storage_fullname, f)
+        else:
+            os.mkdir(storage_fullname)
             # except Exception as e:
             #     print(f"Upload failed with exception: {e}")
             #     break # This cuts on a network loss hopefully

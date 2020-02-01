@@ -19,7 +19,8 @@ def string_normalization(filename):
     filename = filename + '.pub.pem' if not filename.endswith('.pub.pem') else filename
     return join(dirname(realpath(__file__)), filename)
 
-def sync_encoder(message):
+def sync_encoder(d_string):
+    message = d_string.encode('ascii')
     assert type(message) == bytes
     
     key = Fernet.generate_key()
@@ -32,6 +33,7 @@ def sync_encoder(message):
     }
     
 def async_encoder(package, public_key):
+    data_package = package.encode('ascii')
     public_key = string_normalization(public_key)
     with open(public_key, "rb") as key_file:
         public_key = serialization.load_pem_public_key(
@@ -40,14 +42,14 @@ def async_encoder(package, public_key):
         )
         
     encrypted = public_key.encrypt(
-        package,
+        data_package,
         padding.OAEP(
             mgf=padding.MGF1(algorithm=hashes.SHA256()),
             algorithm=hashes.SHA256(),
             label=None
         )
     )
-    return base64.standard_b64encode(encrypted)
+    return base64.standard_b64encode(encrypted).decode()
 
 def encoder(message, public_key):
     sync_encrypted = sync_encoder(message) # This encrypts the message as part of the payload

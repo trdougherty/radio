@@ -21,7 +21,7 @@ public_keyname = os.getenv('PUBLIC_KEY')
 error_dir = os.getenv('ERROR_FILES')
 gpio_bool = os.getenv("GPIO")
 
-if gpio_bool:
+if bool(gpio_bool):
     white = os.getenv("WHITE")
     red = os.getenv("RED")
     error_led = LED(red)
@@ -47,14 +47,14 @@ def upload(directory, filename):
     
     d.update({ 'name': name_kernel })
     d_string = json.dumps(d)
-    d_string_as_bytes = str.encode(d_string)
-    encoded = encoder(d_string_as_bytes, public_keyname)
-    print(encoded)
-    print(type(encoded))
+    print(type(d_string))
+    
+    encoded = encoder(d_string, public_keyname)
     for i in encoded.keys():
         current_type = type(encoded[i])
         print(f"{i} type: {current_type}")
 
+    print(encoded)
     req = requests.post(remote, json=encoded)
     print(req.status_code)
     if (req.status_code == 200): #aka data was successfully recieved and interpreted without a problem
@@ -62,7 +62,7 @@ def upload(directory, filename):
             upload_led.on()
             time.sleep(1)
             upload_led.off()
-        os.remove(filename_full)
+        # os.remove(filename_full)
         return
     # We got rate limited - need to wait for next upload
     elif (req.status_code == 429):
