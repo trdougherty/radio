@@ -54,7 +54,6 @@ def upload(directory, filename):
         current_type = type(encoded[i])
         print(f"{i} type: {current_type}")
 
-    print(encoded)
     req = requests.post(remote, json=encoded)
     print(req.status_code)
     if (req.status_code == 200): #aka data was successfully recieved and interpreted without a problem
@@ -62,7 +61,7 @@ def upload(directory, filename):
             upload_led.on()
             time.sleep(1)
             upload_led.off()
-        # os.remove(filename_full)
+        os.remove(filename_full)
         return
     # We got rate limited - need to wait for next upload
     elif (req.status_code == 429):
