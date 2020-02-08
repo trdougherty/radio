@@ -23,7 +23,7 @@ then
     printf "Processing scan... \n"
     head $TEMP_DIR/$temp_filename
     printf "\n"
-    ./process_rawscan.py $TEMP_DIR/$temp_filename 2> python_error.txt
+    ./process_rawscan.py $TEMP_DIR/$temp_filename
 else	
     echo "Process failed.\n\n"
     # This flashes a warning sign
