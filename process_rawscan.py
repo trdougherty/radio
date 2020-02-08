@@ -101,7 +101,7 @@ if __name__ == "__main__":
         if 'gps' in failure:
             if gpio_bool:
                 error_led.on()
-                time.sleep(1)
+                time.sleep(0.3)
                 error_led.off()
         print('Process Rawscan failed with error: {}'.format(ex))
         
