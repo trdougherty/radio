@@ -19,7 +19,6 @@ def gps_scan():
 				"alt": found["alt"]
 			}
         return None
-    
     except:
         return None
  
