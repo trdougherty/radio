@@ -48,66 +48,68 @@ filename = arguments[1]
 
 print("Arguments: ", arguments)
 
-try:
-    print("Extracting file from: ", filename)
+if __name__ == "__main__":
+    print('Process Rawscan Initiate:\t')
+    try:
+        print("Extracting file from: ", filename)
 
-    file_base = splitext(filename)[0] # Base name of the file
+        file_base = splitext(filename)[0] # Base name of the file
 
-    saving = join(current_path, storage) #The storage directory
-    print("Target save folder: ", saving)
+        saving = join(current_path, storage) #The storage directory
+        print("Target save folder: ", saving)
 
-    # Extracts the scan from temp storage
-    scan = pd.read_csv(filename, delimiter=",", names=["Date","Time","hz_low","hz_high","hz_bin","n_samples","db1","db2","db3","db4","db5"])
+        # Extracts the scan from temp storage
+        scan = pd.read_csv(filename, delimiter=",", names=["Date","Time","hz_low","hz_high","hz_bin","n_samples","db1","db2","db3","db4","db5"])
 
-    # GPS data if possible
-    
-    # gps_info = gps_scan()
-    # print('GPS info: {}'.format(gps_info))
-    
-    # if not gps_info:
-    #     raise Exception('gps')
-    
-    # This is a sample for trial purposes
-    gps_info = {
-			"lat": 37.4278,
-			"lon": -122.1752,
-			"alt": 0
-		}
-
-    if bool(int(edge)):
-        json_scan = pandas_process(scan) # -> this will return a dictionary
-    else:
-        json_scan = scan.to_json(orient='records')
+        # GPS data if possible
         
-    full_data = {
-        "metadata": {
-            "name": name,
-            "scientist": scientist,
-            "antenna": antenna,
-            "samples": samples,
-            "edge": edge,
-            "gps": gps_info
-        },
-        "data": json_zip(json_scan)
-    }
+        # gps_info = gps_scan()
+        # print('GPS info: {}'.format(gps_info))
+        
+        # if not gps_info:
+        #     raise Exception('gps')
+        
+        # This is a sample for trial purposes
+        gps_info = {
+                "lat": 37.4278,
+                "lon": -122.1752,
+                "alt": 0
+            }
 
-    print("Full Data: {}".format(full_data))
+        if bool(int(edge)):
+            json_scan = pandas_process(scan) # -> this will return a dictionary
+        else:
+            json_scan = scan.to_json(orient='records')
+            
+        full_data = {
+            "metadata": {
+                "name": name,
+                "scientist": scientist,
+                "antenna": antenna,
+                "samples": samples,
+                "edge": edge,
+                "gps": gps_info
+            },
+            "data": json_zip(json_scan)
+        }
 
-    # Makes the directory if it doesn't already exist
-    if not os.path.exists(saving):
-        os.makedirs(saving)
+        print("Full Data: {}".format(full_data))
 
-    with open(saving+"/"+strip_prefix(file_base, temp +"/")+".json",'w') as f:
-        print('Saving file to: {}'.format(saving))
-        json.dump(full_data, f)
+        # Makes the directory if it doesn't already exist
+        if not os.path.exists(saving):
+            os.makedirs(saving)
 
-except Exception as ex:
-    failure = ex.args
-    if 'gps' in failure:
-        if gpio_bool:
-            error_led.on()
-            time.sleep(1)
-            error_led.off()
-    print('Process Rawscan failed with error: {}'.format(ex))
-    
-os.remove(filename)
+        with open(saving+"/"+strip_prefix(file_base, temp +"/")+".json",'w') as f:
+            print('Saving file to: {}'.format(saving))
+            json.dump(full_data, f)
+
+    except Exception as ex:
+        failure = ex.args
+        if 'gps' in failure:
+            if gpio_bool:
+                error_led.on()
+                time.sleep(1)
+                error_led.off()
+        print('Process Rawscan failed with error: {}'.format(ex))
+        
+    os.remove(filename)
