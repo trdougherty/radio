@@ -19,7 +19,8 @@ def gps_scan():
 				"alt": found["alt"]
 			}
         return None
-    except:
+    except Exception as e:
+        print(e)
         return None
  
 def get_time():
@@ -31,27 +32,31 @@ def get_time():
 
 def helper():
 	# Setting initial terms so we can run scans
-	counter = 0
-	initial_terms = 0
-	returning = {}
-	print('Initiating GPS scan...')
-	while counter < int(os.getenv("GPS_SCANS", 3)):
-		counter += 1
-		gps_data = gps.gather()
-		if gps_data:
-			ts = bool(gps_data["time"])
-			lat = bool(gps_data["lat"])
-			lon = bool(gps_data["lon"])
-			alt = bool(gps_data["alt"])
-		else:
-			ts = lat = lon = alt = False
+	try:
+		counter = 0
+		initial_terms = 0
+		returning = {}
+		print('Initiating GPS scan...')
+		while counter < int(os.getenv("GPS_SCANS", 3)):
+			counter += 1
+			gps_data = gps.gather()
+			if gps_data:
+				ts = bool(gps_data["time"])
+				lat = bool(gps_data["lat"])
+				lon = bool(gps_data["lon"])
+				alt = bool(gps_data["alt"])
+			else:
+				ts = lat = lon = alt = False
 
-		count = ts + lat + lon + alt
-		if count > initial_terms:
-			returning = gps_data
-			initial_terms = count
-	
-	return returning
+			count = ts + lat + lon + alt
+			if count > initial_terms:
+				returning = gps_data
+				initial_terms = count
+		
+		return returning
+	except Exception as e:
+	    print(e)
+            return None
 
 if __name__ == "__main__":
     gps_scan()
