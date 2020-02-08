@@ -39,7 +39,7 @@ def async_encoder(package, public_key):
         public_key = serialization.load_pem_public_key(
             key_file.read(),
             backend=default_backend()
-        )
+        )        
         
     encrypted = public_key.encrypt(
         data_package,

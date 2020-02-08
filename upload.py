@@ -54,28 +54,34 @@ def upload(directory, filename):
         current_type = type(encoded[i])
         print(f"{i} type: {current_type}")
 
-    req = requests.post(remote, json=encoded)
-    print(req.status_code)
-    if (req.status_code == 200): #aka data was successfully recieved and interpreted without a problem
-        if gpio_bool:
-            upload_led.on()
-            time.sleep(1)
-            upload_led.off()
-        os.remove(filename_full)
+    try:
+        req = requests.post(remote, json=encoded)
+        print(req.status_code)
+        if (req.status_code == 200): #aka data was successfully recieved and interpreted without a problem
+            if gpio_bool:
+                upload_led.on()
+                time.sleep(0.1)
+                upload_led.off()
+            os.remove(filename_full)
+            return
+        # We got rate limited - need to wait for next upload
+        elif (req.status_code == 429):
+            if gpio_bool: error_led.on()
+            time.sleep(10)
+            if gpio_bool: error_led.off()
+            return
+        else:
+            return
+    except ConnectionError:
+        print('Server is down.')
         return
-    # We got rate limited - need to wait for next upload
-    elif (req.status_code == 429):
-        if gpio_bool: error_led.on()
-        time.sleep(10)
-        if gpio_bool: error_led.off()
-        return
-    else:
-        if gpio_bool: error_led.on()
-        if not os.path.isdir(error_fullpath): os.makedirs(error_fullpath)
-        os.rename(filename_full, os.path.join(error_fullpath, filename))
-        time.sleep(3)
-        if gpio_bool: error_led.off()
-        return
+        # if gpio_bool: error_led.on()
+        # if not os.path.isdir(error_fullpath): os.makedirs(error_fullpath)
+        # os.rename(filename_full, os.path.join(error_fullpath, filename))
+        # time.sleep(3)
+        # if gpio_bool: error_led.off()
+        # return
+        
     # except requests.exceptions.RequestException as e:
     #     print("Reuqest exception! Failed with error: ",e)
     # except AssertionError as e:

@@ -13,6 +13,7 @@ from compression import convert_json
 from strip_prefix import strip_prefix
 from gpiozero import LED
 from pandas_process import pandas_process
+from gps_scan import gps_scan
 
 from os.path import join, dirname, realpath, splitext
 from dotenv import load_dotenv
@@ -60,8 +61,8 @@ if __name__ == "__main__":
         # GPS data if possible
         # gps_info = gps_scan()
         # print('GPS info: {}'.format(gps_info))
-        
         # if not gps_info:
+        #     os.remove(filename)
         #     raise Exception('gps')
         
         # This is a sample for trial purposes

@@ -5,7 +5,6 @@ import serial
 import pynmea2
 import time
 import os
-
 import gps
 
 from dotenv import load_dotenv
