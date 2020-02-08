@@ -2,7 +2,6 @@
 
 from __future__ import print_function
 import serial
-import pynmea2
 import time
 import os
 import gps
