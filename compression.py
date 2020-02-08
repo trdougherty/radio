@@ -1,6 +1,4 @@
-from __future__ import division
 from builtins import str
-from past.utils import old_div
 import pandas as pd
 import numpy as np
 
@@ -15,7 +13,7 @@ def convert_json(sweep):
 
     for i, row in sweep.iterrows():
         high = row['hz_high']; low = row['hz_low'];
-        r = np.arange(low, high, old_div((high-low),5)) # Five is from the sweep software we're provided
+        r = np.arange(low, high, (high-low) // 5) # Five is from the sweep software we're provided
         for c,i in enumerate(r):
             temp = temp.append({"hz":i, "db":row.iloc[2+c]}, ignore_index=True)
 
