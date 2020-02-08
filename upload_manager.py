@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import os
-
+import time
 import dotenv
 dotenv.load_dotenv()
 
@@ -24,6 +24,7 @@ if __name__ == "__main__":
             for f in files(storage_fullname):
                 print('Current file uploading: {}'.format(f))
                 upload(storage_fullname, f)
+            time.sleep(2)
         else:
             os.mkdir(storage_fullname)
             # except Exception as e:
