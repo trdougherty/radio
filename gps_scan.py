@@ -10,18 +10,25 @@ from dotenv import load_dotenv
 load_dotenv(verbose=True)
 
 def gps_scan():
-	found = helper()
-	if found:
-		return {
-			"lat": found["lat"],
-			"lon": found["lon"],
-			"alt": found["alt"]
-		}
+    try:
+        found = helper()
+        if found:
+            return {
+       			"lat": found["lat"],
+          		"lon": found["lon"],
+				"alt": found["alt"]
+			}
+        return None
+    
+    except:
+        return None
  
 def get_time():
     found = helper()
     if found:
         return found["time"]
+    else:
+        return None
 
 def helper():
 	# Setting initial terms so we can run scans
