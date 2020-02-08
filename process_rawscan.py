@@ -52,17 +52,12 @@ if __name__ == "__main__":
     print('Process Rawscan Initiate:\t')
     try:
         print("Extracting file from: ", filename)
-
         file_base = splitext(filename)[0] # Base name of the file
-
         saving = join(current_path, storage) #The storage directory
         print("Target save folder: ", saving)
-
         # Extracts the scan from temp storage
         scan = pd.read_csv(filename, delimiter=",", names=["Date","Time","hz_low","hz_high","hz_bin","n_samples","db1","db2","db3","db4","db5"])
-
         # GPS data if possible
-        
         # gps_info = gps_scan()
         # print('GPS info: {}'.format(gps_info))
         
@@ -92,8 +87,6 @@ if __name__ == "__main__":
             },
             "data": json_zip(json_scan)
         }
-
-        print("Full Data: {}".format(full_data))
 
         # Makes the directory if it doesn't already exist
         if not os.path.exists(saving):
