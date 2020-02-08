@@ -61,7 +61,6 @@ if __name__ == "__main__":
         # GPS data if possible
         gps_info = gps_scan()
         if not gps_info:
-            os.remove(filename)
             raise Exception('gps')
         
         # This is a sample for trial purposes
