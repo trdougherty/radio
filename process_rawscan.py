@@ -59,18 +59,17 @@ if __name__ == "__main__":
         # Extracts the scan from temp storage
         scan = pd.read_csv(filename, delimiter=",", names=["Date","Time","hz_low","hz_high","hz_bin","n_samples","db1","db2","db3","db4","db5"])
         # GPS data if possible
-        # gps_info = gps_scan()
-        # print('GPS info: {}'.format(gps_info))
-        # if not gps_info:
-        #     os.remove(filename)
-        #     raise Exception('gps')
+        gps_info = gps_scan()
+        if not gps_info:
+            os.remove(filename)
+            raise Exception('gps')
         
         # This is a sample for trial purposes
-        gps_info = {
-                "lat": 37.4278,
-                "lon": -122.1752,
-                "alt": 0
-            }
+        # gps_info = {
+        #         "lat": 37.4278,
+        #         "lon": -122.1752,
+        #         "alt": 0
+        #     }
 
         if bool(int(edge)):
             print('Executing Edge Computing...')
