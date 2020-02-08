@@ -73,6 +73,7 @@ if __name__ == "__main__":
             }
 
         if bool(int(edge)):
+            print('Executing Edge Computing...')
             json_scan = pandas_process(scan) # -> this will return a dictionary
         else:
             json_scan = scan.to_json(orient='records')
