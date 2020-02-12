@@ -62,4 +62,5 @@ def helper():
 		return None
 
 if __name__ == "__main__":
-    gps_scan()
+    returning = gps_scan()
+    print(returning)
