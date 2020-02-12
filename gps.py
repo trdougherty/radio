@@ -30,7 +30,6 @@ class GPS():
     # Main loop runs forever printing the location, etc. every second.
     def gather(self):
         self.gps.update()
-        time.sleep(1)
         if self.gps.has_fix:
             print('GPS is fixed')
             return {
