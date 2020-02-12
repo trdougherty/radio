@@ -29,6 +29,8 @@ gpio_bool = os.getenv("GPIO")
 if gpio_bool:
     red = os.getenv("RED")
     error_led = LED(red)
+    yellow = os.getenv("YELLOW")
+    gps_led = LED(yellow)
 
 # This will terminate the program if there is no name. Don't be mean. Give your child a name.
 name = os.getenv("NAME")
@@ -62,6 +64,11 @@ if __name__ == "__main__":
         gps_info = gps_scan()
         if not gps_info:
             raise Exception('gps')
+        
+        if gpio_bool:
+            gps_led.on()
+            time.sleep(0.3)
+            gps_led.off()
         
         # This is a sample for trial purposes
         # gps_info = {

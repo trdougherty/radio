@@ -60,7 +60,7 @@ def upload(directory, filename):
         if (req.status_code == 200): #aka data was successfully recieved and interpreted without a problem
             if gpio_bool:
                 upload_led.on()
-                time.sleep(0.1)
+                time.sleep(0.3)
                 upload_led.off()
             os.remove(filename_full)
             return
