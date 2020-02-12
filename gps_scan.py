@@ -37,7 +37,9 @@ def helper():
 		initial_terms = 0
 		returning = {}
 		print('Initiating GPS scan...')
+		gps.setup()
 		while counter < int(os.getenv("GPS_SCANS", 3)):
+			print('Waiting for fix...')
 			counter += 1
 			gps_data = gps.gather()
 			if gps_data:
@@ -47,6 +49,7 @@ def helper():
 				alt = bool(gps_data["alt"])
 			else:
 				ts = lat = lon = alt = False
+				time.sleep(1)
 
 			count = ts + lat + lon + alt
 			if count > initial_terms:
@@ -55,8 +58,8 @@ def helper():
 		
 		return returning
 	except Exception as e:
-	    print(e)
-            return None
+		print(e)
+		return None
 
 if __name__ == "__main__":
     gps_scan()
