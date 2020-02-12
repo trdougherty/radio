@@ -22,7 +22,7 @@ class GPS():
     def setup(self):
         ( uart, gps ) = self.connection()  # Use UART/pyserial
         gps.send_command(b'PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0')
-        time.sleep(2)
+        time.sleep(1)
         # Set update rate to once a second (1hz) which is what you typically want.
         gps.send_command(b'PMTK220,300')
         return ( uart, gps )
@@ -30,6 +30,7 @@ class GPS():
     # Main loop runs forever printing the location, etc. every second.
     def gather(self):
         self.gps.update()
+        time.sleep(1)
         if self.gps.has_fix:
             print('GPS is fixed')
             return {
