@@ -14,7 +14,8 @@ def pandas_process(sweep):
         high = row['hz_high']; low = row['hz_low'];
         r = np.arange(low, high, (high-low)/5) # Five is from the sweep software we're provided
         for c,i in enumerate(r):
-            temp = temp.append({"hz":i, "db":row.iloc[c]}, ignore_index=True)
+            vals = row.iloc[c].drop(labels=["hz_low", "hz_high"])
+            temp = temp.append({"hz":i, "db":vals}, ignore_index=True)
 
     return {
         "date":date,

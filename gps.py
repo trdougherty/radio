@@ -14,7 +14,7 @@ class GPS():
         ( self.uart, self.gps ) = self.setup()
         
     def connection(self):
-        uart = serial.Serial("/dev/serial0", baudrate=9600, timeout=7000)
+        uart = serial.Serial("/dev/serial0", baudrate=9600, timeout=10)
         #uart = busio.UART(board.TX, board.RX, baudrate=9600, timeout=10)
         gps = adafruit_gps.GPS(uart, debug=True)
         return ( uart, gps )
